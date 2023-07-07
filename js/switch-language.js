@@ -1,65 +1,64 @@
+/*
+This code is used to implement language switching functionality on a webpage. It uses JavaScript to manipulate the HTML elements of the page.
+
+The code starts by getting the HTML elements needed for the language switching logic. Specifically, it gets the elements with the IDs "english-content" and "arabic-content", as well as all the buttons with the class "switch-lang button".
+
+The code then adds event listeners to each of the language switching buttons. When a button is clicked, the code checks its innerHTML to determine which language to switch to. If the innerHTML is "EN", the code switches to English by calling the switchLanguage() function with the argument "en". If the innerHTML is "AR", the code switches to Arabic by calling the switchLanguage() function with the argument "ar".
+
+The switchLanguage() function sets the content-language item in localStorage to the selected language. It then checks the selected language and sets the display style of the appropriate content element to "block" and the other content element to "none". It also sets the background color of the active button to blue and the background color of the inactive button to gray.
+
+The setActiveButton() function is used by switchLanguage() to set the background color of the active button to blue and the background color of the inactive button to gray.
+
+Finally, the code checks localStorage for the last selected language. If a language is found, it calls the switchLanguage() function with the appropriate argument. If no language is found, it defaults to English by calling switchLanguage() with the argument "en".
+*/
+
 /********** get html elements needed for language switching logic **********/
 const englishContent = document.getElementById("english-content");
 const arabicContent = document.getElementById("arabic-content");
-const btns = document.querySelectorAll(".switch-lang button");
+const buttons = document.querySelectorAll(".switch-lang button");
 
 /********** when the user clicks the language switching buttons to change the content language **********/
-btns.forEach((btn) => {
+buttons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    if (btn.innerHTML == "EN") {
-      localStorage.setItem("content-language", "en");
-      englishContent.style.setProperty("display", "block");
-      arabicContent.style.setProperty("display", "none");
-      btns.forEach((button) => {
-        button.style.setProperty("background-color", "rgb(189, 189, 189)");
-      });
-      btn.style.setProperty("background-color", "rgb(0, 84, 166)");
-    } else if (btn.innerHTML == "AR") {
-      localStorage.setItem("content-language", "ar");
-      arabicContent.style.setProperty("display", "block");
-      englishContent.style.setProperty("display", "none");
-      btns.forEach((button) => {
-        button.style.setProperty("background-color", "rgb(189, 189, 189)");
-      });
-      btn.style.setProperty("background-color", "rgb(0, 84, 166)");
-    }
+    if (btn.innerHTML === "EN") switchLanguage("en");
+    else if (btn.innerHTML === "AR") switchLanguage("ar");
   });
 });
 
+function switchLanguage(language) {
+  localStorage.setItem("content-language", language);
+
+  if (language === "en") {
+    englishContent.style.display = "block";
+    arabicContent.style.display = "none";
+    setActiveButton(document.querySelector(".switch-lang button:nth-child(1)"));
+  } else if (language === "ar") {
+    arabicContent.style.display = "block";
+    englishContent.style.display = "none";
+    setActiveButton(document.querySelector(".switch-lang button:nth-child(2)"));
+  }
+}
+
+function setActiveButton(button) {
+  buttons.forEach((btn) => {
+    btn.style.backgroundColor =
+      btn === button ? "rgb(0, 84, 166)" : "rgb(189, 189, 189)";
+  });
+}
+
 /********** when the user opens the website gets him the last language **********/
-let currentLang = localStorage.getItem("content-language");
+const currentLang = localStorage.getItem("content-language");
 if (currentLang) {
-  if (currentLang == "en") {
-    englishContent.style.setProperty("display", "block");
-    arabicContent.style.setProperty("display", "none");
-    btns.forEach((b) => {
-      if (b.innerHTML == "EN") {
-        b.style.setProperty("background-color", "rgb(0, 84, 166)");
-      } else {
-        b.style.setProperty("background-color", "rgb(189, 189, 189)");
-      }
-    });
-  } else if (currentLang == "ar") {
-    arabicContent.style.setProperty("display", "block");
-    englishContent.style.setProperty("display", "none");
-    btns.forEach((b) => {
-      if (b.innerHTML == "AR") {
-        b.style.setProperty("background-color", "rgb(0, 84, 166)");
-      } else {
-        b.style.setProperty("background-color", "rgb(189, 189, 189)");
-      }
-    });
+  switch (currentLang) {
+    case "en":
+      switchLanguage("en");
+      break;
+    case "ar":
+      switchLanguage("ar");
+      break;
+    default:
+      switchLanguage("en");
   }
 } else {
-  // set the default language to english
-  localStorage.setItem("content-language", "en");
-  englishContent.style.setProperty("display", "block");
-  arabicContent.style.setProperty("display", "none");
-  btns.forEach((b) => {
-    if (b.innerHTML == "EN") {
-      b.style.setProperty("background-color", "rgb(0, 84, 166)");
-    } else {
-      b.style.setProperty("background-color", "rgb(189, 189, 189)");
-    }
-  });
+  switchLanguage("en");
 }
