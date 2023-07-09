@@ -9,7 +9,7 @@ img {
   width: 100%;
 }
 .container {
-  width: 400px;
+  width: 80%;
   margin: 0 auto;
 }
 body {
@@ -26,58 +26,80 @@ body {
 /* End Global Rules */
 
 /* Start Nav Bar */
+.nav-container {
+  position: fixed;
+  width: 100vw;
+  background-color: #fff;
+}
+
 .navbar {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 27px;
+  padding: 10px;
 }
+
+.navbar .nav-right {
+  display: flex;
+}
+.navbar .nav-right > * {
+  height: 45px;
+}
+.navbar .nav-right > :not(:first-child) {
+  border-left: 1px solid #eee;
+  padding-left: 10px;
+  margin-left: 10px;
+}
+
 .navbar .social {
   display: flex;
+  align-items: center;
   gap: 10px;
   color: var(--main-color);
-  /* align-self: flex-start; */
 }
 .navbar .social .social__facebook,
 .navbar .social .social__instagram {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
 }
 .navbar .phone-number {
   width: 134px;
-  /* align-self: flex-start; */
+  align-items: center;
 }
 .navbar .logo-langswitch {
-  width: 100%;
-  order: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 18px 0px;
   gap: 32px;
 }
 .navbar .logo-langswitch .logo {
-  width: 160px;
+  width: 120px;
 }
 .switch-lang {
   display: flex;
+  align-items: center;
 }
-.switch-lang .en,
-.switch-lang .ar {
-  width: 47px;
+.switch-lang .en {
   height: 40px;
   border: none;
-  /* background-color: #bdbdbd; */
-  color: #fff;
-  font-size: 0.8669rem;
   font-weight: 400;
+  background: white;
+  color: var(--main-color);
+  font-size: 18px;
+  cursor: pointer;
+}
+.switch-lang .en:hover {
+  transition: 0.3s;
+  transform: translateY(2px);
 }
 /* End Nav Bar */
 
 /* Start content */
 .content__section {
-  padding: 37px 20px 0px;
+  padding: 27px 20px 0px;
+}
+.content__section:first-child {
+  padding: 128.26px 20px 0px;
 }
 .content__section__title {
   color: var(--main-color);
@@ -125,24 +147,30 @@ body {
 
 /* Start Media */
 @media screen and (min-width: 768px) {
-  .container {
-    width: 70%;
-  }
   .navbar .logo-langswitch {
-    order: 0;
     width: fit-content;
     margin: 0px;
     gap: 10px;
   }
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 992px) {
   .container {
-    width: 60rem;
+    width: 960px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .navbar.container {
+    width: 90vw;
   }
 }
 @media screen and (max-width: 576px) {
-  .container {
-    width: 80%;
+  .navbar {
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .content__section:first-child {
+    padding: 189.26px 20px 0px;
   }
 }
 /* End Media */

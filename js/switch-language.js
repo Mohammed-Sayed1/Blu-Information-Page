@@ -15,14 +15,12 @@ Finally, the code checks localStorage for the last selected language. If a langu
 /********** get html elements needed for language switching logic **********/
 const englishContent = document.getElementById("english-content");
 const arabicContent = document.getElementById("arabic-content");
-const buttons = document.querySelectorAll(".switch-lang button");
+const button = document.getElementById("lang-switch-btn");
 
 /********** when the user clicks the language switching buttons to change the content language **********/
-buttons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    if (btn.innerHTML === "EN") switchLanguage("en");
-    else if (btn.innerHTML === "AR") switchLanguage("ar");
-  });
+button.addEventListener("click", () => {
+  if (button.innerHTML === "English") switchLanguage("en");
+  else if (button.innerHTML === "Arabic") switchLanguage("ar");
 });
 
 function switchLanguage(language) {
@@ -31,19 +29,12 @@ function switchLanguage(language) {
   if (language === "en") {
     englishContent.style.display = "block";
     arabicContent.style.display = "none";
-    setActiveButton(document.querySelector(".switch-lang button:nth-child(1)"));
+    button.innerHTML = "Arabic";
   } else if (language === "ar") {
     arabicContent.style.display = "block";
     englishContent.style.display = "none";
-    setActiveButton(document.querySelector(".switch-lang button:nth-child(2)"));
+    button.innerHTML = "English";
   }
-}
-
-function setActiveButton(button) {
-  buttons.forEach((btn) => {
-    btn.style.backgroundColor =
-      btn === button ? "rgb(0, 84, 166)" : "rgb(189, 189, 189)";
-  });
 }
 
 /********** when the user opens the website gets him the last language **********/
@@ -62,3 +53,12 @@ if (currentLang) {
 } else {
   switchLanguage("en");
 }
+
+/********** show and hide navbar shadow **********/
+const nav = document.querySelector(".nav-container");
+console.log(nav);
+function activateNav() {
+  if (this.scrollY > 0) nav.style.boxShadow = "0px 0px 10px 1px #eee";
+  else nav.style.boxShadow = "0px 0px 0px 0px #eee";
+}
+window.addEventListener("scroll", activateNav);
